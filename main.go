@@ -10,9 +10,9 @@ import (
 
 func main() {
 	var (
-		port      = os.Getenv("PORT")       // sets automatically
-		publicURL = os.Getenv("PUBLIC_URL") // you must add it to your config vars
-		token     = os.Getenv("TOKEN")      // you must add it to your config vars
+		port      = os.Getenv("PORT")
+		publicURL = "tg.me/ElonVMaskeBot"
+		token     = "1105551961:AAE_gaIQhxz08hiRiI1T8eRPzWXsRfl-DqE"
 	)
 
 	webhook := &tb.Webhook{

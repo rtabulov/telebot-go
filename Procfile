@@ -1,1 +1,1 @@
-web: ./telebot-go
+webhook: ./telebot-go
