@@ -2,21 +2,35 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"os"
+
+	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 func main() {
-	// static folder
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	var (
+		port      = os.Getenv("PORT")       // sets automatically
+		publicURL = os.Getenv("PUBLIC_URL") // you must add it to your config vars
+		token     = os.Getenv("TOKEN")      // you must add it to your config vars
+	)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	webhook := &tb.Webhook{
+		Listen:   ":" + port,
+		Endpoint: &tb.WebhookEndpoint{PublicURL: publicURL},
 	}
-	port = ":" + port
 
-	log.Print("Listening on http://localhost", port, "\n")
-	log.Fatal(http.ListenAndServe(port, nil))
+	pref := tb.Settings{
+		Token:  token,
+		Poller: webhook,
+	}
+
+	b, err := tb.NewBot(pref)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	b.Handle("/hello", func(m *tb.Message) {
+		b.Send(m.Sender, "Hi!")
+	})
+
 }
