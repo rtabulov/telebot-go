@@ -15,16 +15,6 @@ func main() {
 		token     = os.Getenv("TOKEN")      // you must add it to your config vars
 	)
 
-	if token == "" {
-		token = TOKEN
-	}
-	if publicURL == "" {
-		publicURL = PUBLIC_URL
-	}
-	if port == "" {
-		port = PORT
-	}
-
 	webhook := &tb.Webhook{
 		Listen:   ":" + port,
 		Endpoint: &tb.WebhookEndpoint{PublicURL: publicURL},
